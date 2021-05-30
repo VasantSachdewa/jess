@@ -1,4 +1,11 @@
-from typing import Dict
+from typing import Dict, TypedDict, Any, Union
+from scraper.models import Websites
+
+
+class WebsiteConfigType(TypedDict):
+    id: int
+    name: str
+    url: str
 
 
 class WebsiteConfigController():
@@ -10,11 +17,10 @@ class WebsiteConfigController():
     def __init__(self):
         pass
 
-    def add_new_config(self, configs: Dict[str]) -> Dict[str]:
-        pass
-        #Adding functionality
-
-
-    #get config from views
-    #Deleteing functionality
-    #Updateing Functionliy
+    def get_config(self, _id: int) -> Union[WebsiteConfigType, Dict]:
+        website_query_set = Websites.objects.filter(id=_id)
+        if website_query_set.exists():
+            website_config = website_query_set.first()
+            return website_config.to_dict()
+        else:
+            return {'message': 'id {} do not exists'.format(_id)}
