@@ -138,6 +138,22 @@ class TestWebsiteConfigView(TestCase):
             '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
         self.assertEqual(response.json(), expected_response)
 
+    def test_delete_valid_config(self):
+        expected_response = {
+            'id': 1,
+            'name': 'jobsdb',
+            'url': 'https://www.jobsdb.com'
+        }
+        response = self.client.delete('/scraper/config/?id=1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), expected_response)
 
+    def test_delete_invalid_config(self):
+        expected_response = {
+            'message': 'id 200 do not exists'
+        }
+        response = self.client.delete('/scraper/config/?id=200')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), expected_response)
 
 

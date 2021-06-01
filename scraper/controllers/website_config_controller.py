@@ -18,8 +18,7 @@ class WebsiteConfigController():
 
         TO-DO: 
             - Remove dependency between model library and
-            controller class, perhaps use Interface and factory
-            method to eliminate the dependency 
+            controller class, perhaps use adapters to eliminate the dependency 
     '''
 
     def __init__(self):
@@ -59,6 +58,14 @@ class WebsiteConfigController():
         # Create new flow
         else:
             return self.add_config(config)
+
+    def delete_config(self, _id: int) -> Union[WebsiteConfigType, Dict]:
+        website_query_set = Websites.objects.filter(id=_id)
+        if website_query_set.exists():
+            website_config = website_query_set.first()
+            return website_config.to_dict()
+        else:
+            return {'message': 'id {} do not exists'.format(_id)}
 
         
 
