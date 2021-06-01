@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from scraper.controllers.website_config_controller import \
     WebsiteConfigController
 from scraper.exceptions.request_exceptions import BadRequestException
-from scraper.validators import WebsiteConfigPostValidator
+from scraper.validators import WebsiteConfigPostValidator, WebsiteConfigPutValidator
 
 logger = Logs.get_logger('SCRAPER')
 
@@ -18,6 +18,7 @@ def index(request):
 class WebsiteConfig(APIView):
     
     post_request_validator = WebsiteConfigPostValidator
+    put_request_validator = WebsiteConfigPutValidator
 
     def __init__(self):
         self.controller = WebsiteConfigController()
@@ -58,3 +59,18 @@ class WebsiteConfig(APIView):
         resp = self.controller.add_config(request.data)
         #return response
         return HttpResponse(json.dumps(resp), content_type='application/json') 
+
+    def put(self, request):
+        request_body = self.put_request_validator(data=request.data)
+        try:
+            if not request_body.is_valid():
+                error = 'Invalid request body {}'.format(request.data)
+                raise BadRequestException(error)
+        except BadRequestException:
+            logger.error('Invalid request body {}'.format(request.data))
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+
+        resp = self.controller.update_config(request.data)
+        return HttpResponse(json.dumps(resp), content_type='application/json') 
+

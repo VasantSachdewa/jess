@@ -64,7 +64,7 @@ class TestWebsiteConfigView(TestCase):
             '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
         self.assertEqual(response.json(), expected_response)
 
-    def test_create_config_empty_request(self):
+    def test_create_config_empty_request_fail(self):
         expected_response = {
             'message': 'Invalid request'
         }
@@ -72,4 +72,72 @@ class TestWebsiteConfigView(TestCase):
         response = self.client.post(
             '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
         self.assertEqual(response.json(), expected_response)
+
+    def test_patch_config_update_valid(self):
+        expected_response = {
+            'id': 1,
+            'name': 'jobsdb',
+            'url': 'https://www.jobsdbpatched.com'
+        }
+        request_body = {
+            'id': 1,
+            'url': 'https://www.jobsdbpatched.com'
+        }
+        response = self.client.put(
+            '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
+        self.assertEqual(response.json(), expected_response)
+
+    def test_patch_config_create_valid(self):
+        expected_response = {
+            'id': 4,
+            'name': 'linkedin',
+            'url': 'https://www.linkedin.com'
+        }
+        request_body = {
+            'name': 'linkedin',
+            'url': 'https://www.linkedin.com'
+        }
+        response = self.client.put(
+            '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
+        self.assertEqual(response.json(), expected_response)
+
+    def test_patch_invalid_id_fail(self):
+        expected_response = {
+            'message': 'Invalid request'
+        }
+        request_body = {
+            'id': 200,
+            'name': 'jobsdb',
+            'url': 'https://www.jobsdbnew.com'
+        }
+        response = self.client.put(
+            '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
+        self.assertEqual(response.json(), expected_response)
+
+    def test_patch_invalid_body_fail(self):
+        expected_response = {
+            'message': 'Invalid request'
+        }
+        request_body = {
+            'id': 200,
+            'namesss': 'jobsdb',
+            'urlsss': 'https://www.jobsdbnew.com'
+        }
+        response = self.client.put(
+            '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
+        self.assertEqual(response.json(), expected_response)
+
+    def test_patch_only_name_fail(self):
+        expected_response = {
+            'message': 'Error creating config'
+        }
+        request_body = {
+            'name': 'jobsdb',
+        }
+        response = self.client.put(
+            '/scraper/config/', data=json.dumps(request_body), content_type="application/json")
+        self.assertEqual(response.json(), expected_response)
+
+
+
 

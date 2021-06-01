@@ -44,3 +44,21 @@ class WebsiteConfigController():
         
         return website_config.to_dict()
 
+    def update_config(self, config: Dict) -> Union[WebsiteConfigType, Dict]:
+        # Update flow
+        if 'id' in config.keys():
+            try:
+                website_config = Websites.objects.get(id=config['id'])
+            except Exception as e:
+                logger.error('Invalid query with error {}'.format(e))
+                return {'message': 'Invalid request'}
+            website_config.name = config.get('name', website_config.name)
+            website_config.url = config.get('url', website_config.url)
+            website_config.save()
+            return website_config.to_dict()
+        # Create new flow
+        else:
+            return self.add_config(config)
+
+        
+
