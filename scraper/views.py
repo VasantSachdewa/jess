@@ -1,6 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+import json
+
+from django.http import HttpResponse, HttpResponseBadRequest
 from jess.libs.logs import Logs
+from rest_framework.views import APIView
+
+from scraper.controllers.website_config_controller import \
+    WebsiteConfigController
+from scraper.exceptions.request_exceptions import BadRequestException
+from scraper.validators import WebsiteConfigPostValidator, WebsiteConfigPutValidator
 
 logger = Logs.get_logger('SCRAPER')
 
@@ -8,23 +15,80 @@ logger = Logs.get_logger('SCRAPER')
 def index(request):
     return HttpResponse("Hello World, You're at the poll index")
 
-def sync_website(request):
-    '''
-        Sync website jobs from website
-    '''
-    #get seller id
-    #get configs
-    #call controller
+class WebsiteConfig(APIView):
+    
+    post_request_validator = WebsiteConfigPostValidator
+    put_request_validator = WebsiteConfigPutValidator
 
-def  add_website_configuration(request):
-    '''
-        Add new website configuration 
-        into datastore
-    '''
-    if request.method == 'GET':
-        #handle GET
-        #check if id is int type or castable
-        #throw bad request if not castable
+    def __init__(self):
+        self.controller = WebsiteConfigController()
 
-    if request.method == 'POST':
-        #handle POST
+    def get(self, request):
+        web_id = request.GET.get('id')
+        try:
+            if not web_id:
+                error = 'No id was sent to request'
+                raise BadRequestException(error)
+            casted_id = int(web_id)
+        except BadRequestException:
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+        except ValueError:
+            logger.error("Invalid request id '{}'".format(web_id))
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+
+        resp = self.controller.get_config(casted_id)
+
+        return HttpResponse(json.dumps(resp), content_type='application/json') 
+
+    def post(self, request):
+        #validate request using validator
+        request_body = self.post_request_validator(data=request.data)
+        try:
+            if not request_body.is_valid():
+                #handle error
+                error = 'Invalid request body {}'.format(request.data)
+                raise BadRequestException(error)
+        except BadRequestException:
+            logger.error('Invalid request body {}'.format(request.data))
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+
+        #handle success
+        resp = self.controller.add_config(request.data)
+        #return response
+        return HttpResponse(json.dumps(resp), content_type='application/json') 
+
+    def put(self, request):
+        request_body = self.put_request_validator(data=request.data)
+        try:
+            if not request_body.is_valid():
+                error = 'Invalid request body {}'.format(request.data)
+                raise BadRequestException(error)
+        except BadRequestException:
+            logger.error('Invalid request body {}'.format(request.data))
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+
+        resp = self.controller.update_config(request.data)
+        return HttpResponse(json.dumps(resp), content_type='application/json') 
+
+    def delete(self, request):
+        web_id = request.GET.get('id')
+        try:
+            if not web_id:
+                error = 'No id was sent to request'
+                raise BadRequestException(error)
+            casted_id = int(web_id)
+        except BadRequestException:
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+        except ValueError:
+            logger.error("Invalid request id '{}'".format(web_id))
+            return HttpResponseBadRequest(
+                json.dumps({'message': 'Invalid request'}), content_type='application/json')
+
+        resp = self.controller.delete_config(casted_id)
+
+        return HttpResponse(json.dumps(resp), content_type='application/json') 
