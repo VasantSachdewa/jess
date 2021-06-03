@@ -15,7 +15,7 @@ class JobRequestError(Exception):
         message = "Made request to {} with status_code {} with resp {}".format(
             endpoint, status_code, resp)   
         logger.error(message)
-        super.__init__(message)
+        super().__init__(message)
 
 
 class JobsdbListingRequestError(JobRequestError):

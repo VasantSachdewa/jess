@@ -7,7 +7,7 @@ from scraper.adapters.job_scraper_interface import JobScraperInterface
 from scraper.exceptions.request_exceptions import (JobsdbDetailRequestError,
                                                    JobsdbListingRequestError)
 
-logger = Logs('Scraper')
+logger = Logs.get_logger('Scraper')
 
 JOB_LISTING_ENDPOINT = 'https://xapi.supercharge-srp.co/job-search/graphql?country=th&isSmartSearch=true'
 LISTING_REQUEST_BODY = {
@@ -116,7 +116,7 @@ class JobsdbScraper(JobScraperInterface):
         logger.debug("Making request to endpoint {}".format(
             self.ENDPOINT))
         page_number = 1
-        while len(job_listings) < post_count:
+        while len(job_listings) < post_count and page_number < 10:
             self.LISTING_REQUEST_BODY['variables']['page'] = page_number
             try:
                 resp = requests.post(
@@ -129,15 +129,20 @@ class JobsdbScraper(JobScraperInterface):
                         self.ENDPOINT, resp.status_code, resp.content)
                 data = resp.json()
             except JobsdbListingRequestError as e:
+                logger.error("Failed request for page_number {}".format(page_number))
                 return []
             except Exception as e:
                 logger.error("Failed request with error {}".format(e))
                 return []
-
-            job_listings.append(data['data']['jobs']['jobs'])
+            job_listings.extend(data['data']['jobs']['jobs'])
             page_number = page_number + 1
 
         return job_listings
+
+
+if __name__ == '__main__':
+    scraper = JobsdbScraper()
+    scraper.get_job_listings(30)
 
 
 
