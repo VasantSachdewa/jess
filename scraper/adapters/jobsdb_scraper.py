@@ -67,6 +67,7 @@ class JobsdbScraper(JobScraperInterface):
     LISTING_REQUEST_BODY = LISTING_REQUEST_BODY 
     JOB_DETAIL_REQUEST_BODY = JOB_DETAIL_REQUEST_BODY
     HEADER = HEADER
+    _ID=1
 
     def get_posts(self, post_count: int=100) -> List:
         job_listings = self.get_job_detail_list(post_count)
