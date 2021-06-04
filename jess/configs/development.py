@@ -13,3 +13,9 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '5432')
     }
 }
+
+#Kafka Configuration
+KAFKA_CONFIG = {
+    'KAFKA_HOST': [os.getenv('KAFKA_HOST', 'localhost:9092')],
+    'KAFKA_TOPIC': os.getenv('KAFKA_TOPIC', 'jobs'),
+}
