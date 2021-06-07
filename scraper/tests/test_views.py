@@ -1,3 +1,6 @@
+import unittest
+from scraper.exceptions import InvalidScaperId
+from unittest.mock import MagicMock, patch
 from django.test import TestCase
 from scraper.models import Websites 
 import json
@@ -157,3 +160,22 @@ class TestWebsiteConfigView(TestCase):
         self.assertEqual(response.json(), expected_response)
 
 
+class TestSyncJob(TestCase):
+
+    @patch('scraper.adapters.kafka_queue.KafkaProducer')
+    def test_get_job_sync_valid_id(self, mock_kafka_producer):
+        expected_response = {
+            'message': 'Started Sync'
+        }
+        response = self.client.get('/scraper/sync_jobs/?id=1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), expected_response)
+
+
+    @patch('scraper.adapters.kafka_queue.KafkaProducer')
+    def test_get_job_sync_invalid_id(self, mock_kafka_producer):
+        self.assertRaises(
+            InvalidScaperId,
+            self.client.get,
+            '/scraper/sync_jobs/?id=2000'
+        )

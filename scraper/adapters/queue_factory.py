@@ -6,4 +6,4 @@ class QueueFactory:
 
     @staticmethod
     def get_message_queue() -> QueueInterface:
-        return KafkaAdapter
+        return KafkaAdapter()
