@@ -12,14 +12,14 @@ logger = Logs.get_logger('Worker')
 
 class JobsdbDetailExtractor(JobExtractorInterface):
     
-    vendor_id = 1
+    ID = 1
     
     def __init__(self, data: list):
         ''' data is list of unprocessed jobs'''
         self.raw_data = data
         
     def get_cleaned_data(self) -> List[ExtractedDataType]:
-        logger.debug("Extracting data for seller {}".format(self.vendor_id))
+        logger.debug("Extracting data for seller {}".format(self.ID))
         extracted_data_list = []
         for job in self.raw_data:
             job_detail = job['data']['jobDetail']
