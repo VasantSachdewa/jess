@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scraper.apps.ScraperConfig',
-    'rest_framework'
+    'rest_framework',
+    'worker.apps.WorkerConfig'
 ]
 
 MIDDLEWARE = [
