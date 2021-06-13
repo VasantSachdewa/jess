@@ -4,14 +4,28 @@ from unittest import skip
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from worker.models import JobsdbRaw, JobsDetail, Vendors
+from django.test.client import ClientHandler
+from worker.models import JobsRaw, JobsDetail, Vendors
+from worker.tests_worker.test_config import JOB_DETAIL_DATA
 
 
-class TestJobsdbRaw(TestCase):
+class TestJobsRaw(TestCase):
 
-    def test_create_jobsdbraw_valid_record(self):
-        record = JobsdbRaw.objects.create(
-            job_id='1',
+
+    @classmethod
+    def setUpTestData(cls):
+        vendor_obj = Vendors(
+            name='random', url='https://www.random.com')
+        vendor_obj.save()
+        job_detail_obj = JobsDetail(vendor_id=vendor_obj, **JOB_DETAIL_DATA)
+        job_detail_obj.save()
+        cls.job_detail_obj = job_detail_obj
+
+    def test_create_jobsraw_valid_record(self):
+        record = JobsRaw.objects.create(
+            id=self.job_detail_obj,
+            vendor_id=self.job_detail_obj.vendor_id,
+            job_id=self.job_detail_obj.vendor_id,
             raw_data={
                 'title': 'Software Engineer',
                 'salary': 20000
@@ -19,21 +33,21 @@ class TestJobsdbRaw(TestCase):
         )
         #does validation
         record.full_clean()
-        self.assertEqual(record.job_id, '1')
+        self.assertEqual(record.job_id, 'random')
 
 
 class TestVendors(TestCase):
 
     def test_create_vendor_valid_record(self):
         record = Vendors(
-            name='jobsdb',
-            url='https://www.jobsdb.com'
+            name='vasant',
+            url='https://www.vasant.com'
         )
         record.full_clean()
         record.save()
-        self.assertEqual(record.vendor_id, 2)
-        self.assertEqual(record.name, 'jobsdb')
-        self.assertEqual(record.url, 'https://www.jobsdb.com')
+        self.assertEqual(record.vendor_id, 4)
+        self.assertEqual(record.name, 'vasant')
+        self.assertEqual(record.url, 'https://www.vasant.com')
 
     def test_create_vendor_invalid_url_record(self):
         record = Vendors(
@@ -48,8 +62,8 @@ class TestJobsDetail(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.vendor_obj = Vendors.objects.create(
-            name='jobsdb',
-            url='https://www.jobsdb.com'
+            name='random',
+            url='https://www.random.com'
         )
 
     @skip("Some weird error")
@@ -63,7 +77,7 @@ class TestJobsDetail(TestCase):
         record = JobsDetail(
             vendor_id=self.vendor_obj,
             job_id='00000001',
-            page_url='https://www.jobsdb.com/posts/1',
+            page_url='https://www.random.com/posts/1',
             salary_min=None,
             salary_max=None,
             currency=None,

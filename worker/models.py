@@ -2,14 +2,6 @@ from typing import Dict
 from django.db import models
 
 # Create your models here.
-class JobsdbRaw(models.Model):
-    job_id = models.CharField(
-        max_length=255, primary_key=True)
-    raw_data = models.JSONField(blank=False)
-
-    def __str__(self) -> str:
-        return self.job_id
-
 
 class Vendors(models.Model):
     vendor_id = models.AutoField(
@@ -31,10 +23,12 @@ class Vendors(models.Model):
     
 
 class JobsDetail(models.Model):
+    id = models.AutoField(
+        primary_key=True)
     vendor_id = models.ForeignKey(
         Vendors, on_delete=models.CASCADE)
     job_id = models.CharField(
-        max_length=255, primary_key=True)
+        max_length=255)
     page_url = models.URLField(
         max_length=200, blank=False, null=False)
     salary_min = models.FloatField(default=None, null=True)
@@ -55,3 +49,15 @@ class JobsDetail(models.Model):
     industry = models.CharField(
         max_length=255, blank=False)
     
+
+class JobsRaw(models.Model):
+    id = models.ForeignKey(
+        JobsDetail, on_delete=models.CASCADE, primary_key=True)
+    vendor_id = models.ForeignKey(
+        Vendors, on_delete=models.CASCADE)
+    job_id = models.CharField(
+        max_length=255)
+    raw_data = models.JSONField(blank=False)
+
+    def __str__(self) -> str:
+        return self.job_id

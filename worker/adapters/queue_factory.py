@@ -1,4 +1,3 @@
-from os import stat
 from worker.adapters.kafka_queue import KafkaAdapter
 from worker.adapters.queue_interface import QueueInterface
 
