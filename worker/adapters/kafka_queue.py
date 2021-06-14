@@ -14,10 +14,10 @@ class KafkaAdapter(QueueInterface):
     GROUP_ID = 'WORKER'
 
     def get_consumer(self) -> KafkaConsumer:
-        return KafkaAdapter(
+        return KafkaConsumer(
             self.KAFKA_CONFIG['KAFKA_TOPIC'],
             group_id=self.GROUP_ID,
-            bootstrap_server=self.KAFKA_CONFIG['KAFKA_HOST'],
+            bootstrap_servers=self.KAFKA_CONFIG['KAFKA_HOST'],
             value_deserializer=lambda m: json.loads(m.decode('ascii')),
             auto_offset_reset='earliest',
             enable_auto_commit=True

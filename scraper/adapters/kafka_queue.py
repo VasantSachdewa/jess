@@ -12,6 +12,7 @@ logger = Logs.get_logger('Scraper')
 class KafkaAdapter(QueueInterface):
 
     KAFKA_CONFIG = KAFKA_CONFIG
+    CHUNK_SIZE = 10
 
     def get_producer(self) -> KafkaProducer:
         return KafkaProducer(
@@ -20,10 +21,18 @@ class KafkaAdapter(QueueInterface):
             api_version=(0, 10)
         )
 
-    def drop_message(self, message: Any):
+    def drop_message(self, messages: Any):
         producer = self.get_producer()
-        producer.send(
-            self.KAFKA_CONFIG['KAFKA_TOPIC'],
-            message
-        )
-        # producer.flush()
+        for message in self._get_chunk(messages):
+            producer.send(
+                self.KAFKA_CONFIG['KAFKA_TOPIC'],
+                message
+            )
+            producer.flush()
+
+    def _get_chunk(self, messages):
+        for i in range(0, len(messages['message']), self.CHUNK_SIZE):
+            yield {
+                'vendor_id': messages['vendor_id'],
+                'message': messages['message'][i:i+self.CHUNK_SIZE]
+            } 

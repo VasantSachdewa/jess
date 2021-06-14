@@ -17,5 +17,5 @@ DATABASES = {
 #Kafka Configuration
 KAFKA_CONFIG = {
     'KAFKA_HOST': [os.getenv('KAFKA_HOST', 'localhost:9092')],
-    'KAFKA_TOPIC': os.getenv('KAFKA_TOPIC', 'jobs'),
+    'KAFKA_TOPIC': os.getenv('KAFKA_TOPIC', 'new_jobs'),
 }
