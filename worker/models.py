@@ -23,6 +23,9 @@ class Vendors(models.Model):
     
 
 class JobsDetail(models.Model):
+    class Meta:
+        unique_together = (('vendor_id', 'job_id'),)
+
     id = models.AutoField(
         primary_key=True)
     vendor_id = models.ForeignKey(
@@ -51,6 +54,9 @@ class JobsDetail(models.Model):
     
 
 class JobsRaw(models.Model):
+    class Meta:
+        unique_together = (('vendor_id', 'job_id'),)
+        
     id = models.ForeignKey(
         JobsDetail, on_delete=models.CASCADE, primary_key=True)
     vendor_id = models.ForeignKey(

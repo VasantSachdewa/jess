@@ -1,4 +1,4 @@
-from worker.extractors.extractor_interface import JobExtractorInterface
+from worker.extractors.extractor_interface import JobExtractorInterface, ExtractedDataType
 from worker.extractors.jobsdb_extractor import JobsdbDetailExtractor
 from worker.exceptions import InvalidExtractorId
 from typing import Dict
@@ -21,12 +21,12 @@ class JobsExtractorFactory:
         JobsExtractorFactory.__instance = self
 
     @staticmethod
-    def get_extractor(_id: int) -> JobExtractorInterface:
+    def get_extractor(_id: int, data: ExtractedDataType) -> JobExtractorInterface:
         if not JobsExtractorFactory.__instance:
             JobsExtractorFactory(_id)
         try:
             extractor_klss = JobsExtractorFactory.__instance.extractor_map[_id]
-            obj = extractor_klss(_id)
+            obj = extractor_klss(data)
         except KeyError as e:
             raise InvalidExtractorId(_id)
 

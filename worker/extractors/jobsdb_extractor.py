@@ -20,25 +20,23 @@ class JobsdbDetailExtractor(JobExtractorInterface):
         
     def get_cleaned_data(self) -> List[ExtractedDataType]:
         logger.debug("Extracting data for seller {}".format(self.ID))
-        extracted_data_list = []
-        for job in self.raw_data:
-            job_detail = job['data']['jobDetail']
-            extracted_data_list.append({
-                'job_id': self._extract_job_id(job_detail),
-                'page_url': self._extract_page_url(job_detail),
-                'min_salary': self._extract_max_salary(job_detail),
-                'max_salary': self._extract_max_salary(job_detail),
-                'currency': 'THB',
-                'job_title': self._extract_title(job_detail),
-                'company': self._extract_company_name(job_detail),
-                'post_date': self._extract_post_date(job_detail),
-                'job_description': self._extract_job_description(job_detail),
-                'job_requirements': self._extract_job_requirements(job_detail),
-                'benefits': self._extract_benefits(job_detail),
-                'industry': self._extract_industry(job_detail)
-            })
+        job_detail = self.raw_data['data']['jobDetail']
+        extracted_data = {
+            'job_id': self._extract_job_id(job_detail),
+            'page_url': self._extract_page_url(job_detail),
+            'salary_max': self._extract_max_salary(job_detail),
+            'salary_min': self._extract_max_salary(job_detail),
+            'currency': 'THB',
+            'job_title': self._extract_title(job_detail),
+            'company': self._extract_company_name(job_detail),
+            'post_date': self._extract_post_date(job_detail),
+            'job_description': self._extract_job_description(job_detail),
+            'job_requirements': self._extract_job_requirements(job_detail),
+            'benefits': self._extract_benefits(job_detail),
+            'industry': self._extract_industry(job_detail)
+        }
             
-        return extracted_data_list
+        return extracted_data
         
     def _extract_job_id(self, job_detail: Dict) -> str:
         return job_detail['id']
@@ -66,8 +64,14 @@ class JobsdbDetailExtractor(JobExtractorInterface):
         return job_deatil['header']['company']['name']
     
     def _extract_post_date(self, job_detail: Dict) -> str:
-        datetime_obj = datetime.datetime.strptime(
-            job_detail['header']['postedAt'], '%Y-%m-%dT%H:%M:%SZ')
+        try:
+            datetime_obj = datetime.datetime.strptime(
+                job_detail['header']['postedAt'], '%Y-%m-%dT%H:%M:%SZ')
+        except ValueError:
+            datetime_obj = datetime.datetime.strptime(
+                job_detail['header']['postedAt'], '%Y-%m-%dT%H:%M:%S.%fZ')
+            
+
         datetime_format = datetime_obj.strftime('%Y-%m-%d %H:%M:%S')
         
         return datetime_format
