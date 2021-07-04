@@ -23,7 +23,9 @@ class TestSyncJobsController(unittest.TestCase):
         queue_factory.get_message_queue = MagicMock(return_value=queue_obj)
         # mock_extractor
         extractor_obj = MagicMock()
-        jobs_extractor_factory.get_extractor = MagicMock(return_value=extractor_obj)
+        jobs_extractor_factory.get_extractor = MagicMock(
+            return_value=extractor_obj
+        )
         # mock postgres adapter
         db_adapter_obj = MagicMock()
         postgres_adapter.return_value = db_adapter_obj

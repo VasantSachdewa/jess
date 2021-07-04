@@ -21,14 +21,18 @@ class PostgresAdapter(DatastoreInterface):
     ) -> JobsDetail:
         logger.debug("Storing {} to Postgres database".format(extracted_data))
         extracted_data["vendor_id"] = vendor_obj
-        job_detail_obj, _ = JobsDetail.objects.update_or_create(**extracted_data)
+        job_detail_obj, _ = JobsDetail.objects.update_or_create(
+            **extracted_data
+        )
         logger.debug(
             "Successfully stored data with id {}".format(job_detail_obj.job_id)
         )
 
         return job_detail_obj
 
-    def store_raw_data(self, job_detail_obj: JobsDetail, raw_data: Dict) -> JobsRaw:
+    def store_raw_data(
+        self, job_detail_obj: JobsDetail, raw_data: Dict
+    ) -> JobsRaw:
         raw_obj, _ = JobsRaw.objects.update_or_create(
             id=job_detail_obj,
             vendor_id=job_detail_obj.vendor_id,

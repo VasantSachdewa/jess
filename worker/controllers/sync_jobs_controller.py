@@ -30,6 +30,10 @@ class SyncJobsController:
             )
             # loop through message job list inside each message
             for job in raw_job_list:
-                detail_extractor = JobsExtractorFactory.get_extractor(vendor_id, job)
+                detail_extractor = JobsExtractorFactory.get_extractor(
+                    vendor_id, job
+                )
                 extracted_job_detail = detail_extractor.get_cleaned_data()
-                self.db_adapter.store_jobs_data(vendor_id, extracted_job_detail, job)
+                self.db_adapter.store_jobs_data(
+                    vendor_id, extracted_job_detail, job
+                )

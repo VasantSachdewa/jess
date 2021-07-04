@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             model_name="jobsdetail",
             name="vendor_id",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="worker.vendors"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="worker.vendors",
             ),
         ),
         migrations.AlterField(
@@ -32,7 +33,8 @@ class Migration(migrations.Migration):
             model_name="jobsraw",
             name="vendor_id",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="worker.vendors"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="worker.vendors",
             ),
         ),
     ]

@@ -12,7 +12,11 @@ class TestWebsiteConfigView(TestCase):
         Websites.objects.create(name="jobsdb", url="https://www.jobsdb.com")
 
     def test_get_valid_config(self):
-        expected_response = {"id": 1, "name": "jobsdb", "url": "https://www.jobsdb.com"}
+        expected_response = {
+            "id": 1,
+            "name": "jobsdb",
+            "url": "https://www.jobsdb.com",
+        }
         response = self.client.get("/scraper/config/?id=1")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), expected_response)
@@ -93,7 +97,11 @@ class TestWebsiteConfigView(TestCase):
 
     def test_patch_invalid_id_fail(self):
         expected_response = {"message": "Invalid request"}
-        request_body = {"id": 200, "name": "jobsdb", "url": "https://www.jobsdbnew.com"}
+        request_body = {
+            "id": 200,
+            "name": "jobsdb",
+            "url": "https://www.jobsdbnew.com",
+        }
         response = self.client.put(
             "/scraper/config/",
             data=json.dumps(request_body),
@@ -128,7 +136,11 @@ class TestWebsiteConfigView(TestCase):
         self.assertEqual(response.json(), expected_response)
 
     def test_delete_valid_config(self):
-        expected_response = {"id": 1, "name": "jobsdb", "url": "https://www.jobsdb.com"}
+        expected_response = {
+            "id": 1,
+            "name": "jobsdb",
+            "url": "https://www.jobsdb.com",
+        }
         response = self.client.delete("/scraper/config/?id=1")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), expected_response)

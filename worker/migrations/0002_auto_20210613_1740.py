@@ -5,7 +5,9 @@ from django.db import migrations
 
 def add_jobsdb_vendor(apps, schedma_editor):
     Vendors = apps.get_model("worker", "Vendors")
-    jobsdb_vendor = Vendors.objects.create(name="jobsdb", url="https://www.jobsdb.com")
+    jobsdb_vendor = Vendors.objects.create(
+        name="jobsdb", url="https://www.jobsdb.com"
+    )
     jobsdb_vendor.save()
 
 

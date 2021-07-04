@@ -61,7 +61,8 @@ class TestJobsDetail(TestCase):
             " features on Siri,Work on security features"
         )
         benefits = (
-            "Best salary in the world,200 days paid holiday" ",Cover dentist charges"
+            "Best salary in the world,200 days paid holiday"
+            ",Cover dentist charges"
         )
         record = JobsDetail(
             vendor_id=self.vendor_obj,

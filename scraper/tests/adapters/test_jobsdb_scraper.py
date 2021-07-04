@@ -87,7 +87,9 @@ class TestJobsdbScraper(unittest.TestCase):
 
     @patch("scraper.adapters.jobsdb_scraper.logger")
     @patch("scraper.adapters.jobsdb_scraper.requests")
-    def test_get_job_listings_response_400(self, requests_module, logger_module):
+    def test_get_job_listings_response_400(
+        self, requests_module, logger_module
+    ):
         post_response = MagicMock()
         post_response.status_code = 400
         requests_module.post = MagicMock(return_value=post_response)

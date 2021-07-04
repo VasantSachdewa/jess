@@ -22,7 +22,9 @@ class JobsExtractorFactory:
         JobsExtractorFactory.__instance = self
 
     @staticmethod
-    def get_extractor(_id: int, data: ExtractedDataType) -> JobExtractorInterface:
+    def get_extractor(
+        _id: int, data: ExtractedDataType
+    ) -> JobExtractorInterface:
         if not JobsExtractorFactory.__instance:
             JobsExtractorFactory(_id)
         try:

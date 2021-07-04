@@ -7,7 +7,9 @@ from worker.tests_worker.test_config import JOB_DETAIL_DATA
 
 class TestPostgresAdapter(unittest.TestCase):
     @patch("worker.adapters.postgres_adapter.PostgresAdapter.store_raw_data")
-    @patch("worker.adapters.postgres_adapter.PostgresAdapter.store_extracted_data")
+    @patch(
+        "worker.adapters.postgres_adapter.PostgresAdapter.store_extracted_data"
+    )
     @patch("worker.adapters.postgres_adapter.Vendors")
     def test_store_jobs_data_valid(
         self, vendor_model, store_extracted_fn, store_raw_fn
@@ -20,14 +22,18 @@ class TestPostgresAdapter(unittest.TestCase):
         adapter = PostgresAdapter()
         adapter.store_jobs_data(vendor_id, extracted_data, raw_data)
         self.assertTrue(vendor_model.objects.get.called_with(vendor_obj))
-        self.assertTrue(store_extracted_fn.called_with(vendor_obj, extracted_data))
+        self.assertTrue(
+            store_extracted_fn.called_with(vendor_obj, extracted_data)
+        )
         self.assertTrue(store_raw_fn.called_with(vendor_obj, raw_data))
 
     @patch("worker.adapters.postgres_adapter.JobsDetail")
     def test_store_extracted_data_valid(self, jobs_detail_model):
         job_detail_obj = MagicMock()
         job_detail_obj.job_id = "random_id"
-        update_or_create_fn = MagicMock(return_value=(job_detail_obj, "irrelevant"))
+        update_or_create_fn = MagicMock(
+            return_value=(job_detail_obj, "irrelevant")
+        )
         objects_attr = MagicMock()
         objects_attr.update_or_create = update_or_create_fn
         jobs_detail_model.objects = objects_attr

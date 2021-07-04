@@ -4,10 +4,15 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from jess.libs.logs import Logs
 from rest_framework.views import APIView
 
-from scraper.controllers.website_config_controller import WebsiteConfigController
+from scraper.controllers.website_config_controller import (
+    WebsiteConfigController,
+)
 from scraper.controllers.job_sync_controller import JobSyncController
 from scraper.exceptions.request_exceptions import BadRequestException
-from scraper.validators import WebsiteConfigPostValidator, WebsiteConfigPutValidator
+from scraper.validators import (
+    WebsiteConfigPostValidator,
+    WebsiteConfigPutValidator,
+)
 
 logger = Logs.get_logger("SCRAPER")
 

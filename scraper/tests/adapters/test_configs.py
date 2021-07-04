@@ -1,6 +1,4 @@
-JOB_LISTING_ENDPOINT = (
-    "https://xapi.supercharge-srp.co/job-search/graphql?country=th&isSmartSearch=true"
-)
+JOB_LISTING_ENDPOINT = "https://xapi.supercharge-srp.co/job-search/graphql?country=th&isSmartSearch=true"
 LISTING_REQUEST_BODY = {
     "query": "query getJobs($country: String, $locale: String, $keyword: String, $createdAt: String, $jobFunctions: [Int], $categories: [String], $locations: [Int], $careerLevels: [Int], $minSalary: Int, $maxSalary: Int, $salaryType: Int, $candidateSalary: Int, $candidateSalaryCurrency: String, $datePosted: Int, $jobTypes: [Int], $workTypes: [String], $industries: [Int], $page: Int, $pageSize: Int, $companyId: String, $advertiserId: String, $userAgent: String, $accNums: Int, $subAccount: Int, $minEdu: Int, $maxEdu: Int, $edus: [Int], $minExp: Int, $maxExp: Int, $seo: String, $searchFields: String, $candidateId: ID, $isDesktop: Boolean, $isCompanySearch: Boolean, $sort: String, $sVi: String, $duplicates: String, $flight: String, $solVisitorId: String) {\n  jobs(country: $country, locale: $locale, keyword: $keyword, createdAt: $createdAt, jobFunctions: $jobFunctions, categories: $categories, locations: $locations, careerLevels: $careerLevels, minSalary: $minSalary, maxSalary: $maxSalary, salaryType: $salaryType, candidateSalary: $candidateSalary, candidateSalaryCurrency: $candidateSalaryCurrency, datePosted: $datePosted, jobTypes: $jobTypes, workTypes: $workTypes, industries: $industries, page: $page, pageSize: $pageSize, companyId: $companyId, advertiserId: $advertiserId, userAgent: $userAgent, accNums: $accNums, subAccount: $subAccount, minEdu: $minEdu, edus: $edus, maxEdu: $maxEdu, minExp: $minExp, maxExp: $maxExp, seo: $seo, searchFields: $searchFields, candidateId: $candidateId, isDesktop: $isDesktop, isCompanySearch: $isCompanySearch, sort: $sort, sVi: $sVi, duplicates: $duplicates, flight: $flight, solVisitorId: $solVisitorId) {\n    ...LegacyCompat_SearchResult\n    relatedSearchKeywords {\n      keywords\n      type\n      totalJobs\n    }\n  }\n}\n\nfragment LegacyCompat_SearchResult on SearchResult {\n  total\n  totalJobs\n  aigdpRelatedSearch\n  relatedSearchKeywords {\n    keywords\n    type\n    totalJobs\n  }\n  solMetadata\n  suggestedEmployer {\n    name\n    totalJobs\n  }\n  queryParameters {\n    key\n    searchFields\n    pageSize\n  }\n  gdpSearchAlgoGroup\n  experiments {\n    flight\n  }\n  jobs {\n    id\n    sourceCountryCode\n    isStandout\n    companyMeta {\n      id\n      advertiserId\n      isPrivate\n      name\n      logoUrl\n      slug\n    }\n    jobTitle\n    jobUrl\n    jobTitleSlug\n    description\n    employmentTypes {\n      code\n      name\n    }\n    sellingPoints\n    locations {\n      code\n      name\n      slug\n      children {\n        code\n        name\n        slug\n      }\n    }\n    categories {\n      code\n      name\n      children {\n        code\n        name\n      }\n    }\n    postingDuration\n    postedAt\n    salaryRange {\n      currency\n      max\n      min\n      period\n      term\n    }\n    salaryVisible\n    bannerUrl\n    isClassified\n    solMetadata\n  }\n}\n",
     "variables": {
@@ -61,7 +59,10 @@ JOB_LISTING_API_RAW_RETURN = {
                 "pageSize": 30,
                 "pageNumber": 1,
                 "totalJobCount": 3085,
-                "tags": {"mordor__flights": "mordor_58", "jobsdb:userGroup": "B"},
+                "tags": {
+                    "mordor__flights": "mordor_58",
+                    "jobsdb:userGroup": "B",
+                },
             },
             "suggestedEmployer": None,
             "queryParameters": {"key": "", "searchFields": "", "pageSize": 30},
@@ -108,7 +109,11 @@ JOB_LISTING_API_RAW_RETURN = {
                             "children": None,
                         },
                         {"code": "144", "name": "Security", "children": None},
-                        {"code": "147", "name": "Network & System", "children": None},
+                        {
+                            "code": "147",
+                            "name": "Network & System",
+                            "children": None,
+                        },
                         {"code": "150", "name": "Others", "children": None},
                     ],
                     "postingDuration": "19 hours ago",
@@ -152,7 +157,9 @@ JOB_LISTING_API_RAW_RETURN = {
                     "jobUrl": "https://th.jobsdb.com/th/en/job/job-300003002373745?token=0~35c79c49-08e9-4be7-ad41-4ffec5877195&sectionRank=2&jobId=jobsdb-th-job-300003002373745",
                     "jobTitleSlug": "it-assistant",
                     "description": "Our client is an IT Solution provider including mobility as a service for transportation/Smart Office/Smart Factory/IoT/Telematics.Salary Max 35,000...",
-                    "employmentTypes": [{"code": "permanent", "name": "Permanent"}],
+                    "employmentTypes": [
+                        {"code": "permanent", "name": "Permanent"}
+                    ],
                     "sellingPoints": [
                         "Good Command of English",
                         "Basic Knowledge in IT Solution",
@@ -177,7 +184,11 @@ JOB_LISTING_API_RAW_RETURN = {
                             "name": "Application Specialist - Software",
                             "children": None,
                         },
-                        {"code": "147", "name": "Network & System", "children": None},
+                        {
+                            "code": "147",
+                            "name": "Network & System",
+                            "children": None,
+                        },
                         {"code": "150", "name": "Others", "children": None},
                     ],
                     "postingDuration": "19 hours ago",
@@ -300,10 +311,19 @@ JOB_LISTINGS = [
         ],
         "sellingPoints": [],
         "locations": [
-            {"code": "89", "name": "Eastern", "slug": "eastern", "children": None}
+            {
+                "code": "89",
+                "name": "Eastern",
+                "slug": "eastern",
+                "children": None,
+            }
         ],
         "categories": [
-            {"code": "131", "name": "Information Technology (IT)", "children": None},
+            {
+                "code": "131",
+                "name": "Information Technology (IT)",
+                "children": None,
+            },
             {"code": "134", "name": "DBA", "children": None},
             {"code": "144", "name": "Security", "children": None},
             {"code": "285", "name": "Professional Services", "children": None},
@@ -357,12 +377,25 @@ JOB_LISTINGS = [
             "Monthly Bonus",
         ],
         "locations": [
-            {"code": "8", "name": "Bangkoknoi", "slug": "bangkoknoi", "children": None}
+            {
+                "code": "8",
+                "name": "Bangkoknoi",
+                "slug": "bangkoknoi",
+                "children": None,
+            }
         ],
         "categories": [
-            {"code": "233", "name": "Sales, CS & Business Devpt", "children": None},
+            {
+                "code": "233",
+                "name": "Sales, CS & Business Devpt",
+                "children": None,
+            },
             {"code": "67", "name": "Customer Service", "children": None},
-            {"code": "131", "name": "Information Technology (IT)", "children": None},
+            {
+                "code": "131",
+                "name": "Information Technology (IT)",
+                "children": None,
+            },
             {"code": "139", "name": "Support", "children": None},
             {"code": "243", "name": "Others", "children": None},
         ],
@@ -411,10 +444,19 @@ JOB_LISTINGS = [
             "สามารถใช้งานระบบปฎิบติการ Ubuntu Server ได้",
         ],
         "locations": [
-            {"code": "63", "name": "Ladlumkaew", "slug": "ladlumkaew", "children": None}
+            {
+                "code": "63",
+                "name": "Ladlumkaew",
+                "slug": "ladlumkaew",
+                "children": None,
+            }
         ],
         "categories": [
-            {"code": "131", "name": "Information Technology (IT)", "children": None},
+            {
+                "code": "131",
+                "name": "Information Technology (IT)",
+                "children": None,
+            },
             {"code": "139", "name": "Support", "children": None},
         ],
         "postingDuration": "7 hours ago",

@@ -94,4 +94,6 @@ class JobsdbDetailExtractor(JobExtractorInterface):
         return job_detail["jobDetail"]["jobRequirement"]["benefits"]
 
     def _extract_industry(self, job_detail: Dict) -> str:
-        return job_detail["jobDetail"]["jobRequirement"]["industryValue"]["label"]
+        return job_detail["jobDetail"]["jobRequirement"]["industryValue"][
+            "label"
+        ]

@@ -14,7 +14,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Vendors",
             fields=[
-                ("vendor_id", models.AutoField(primary_key=True, serialize=False)),
+                (
+                    "vendor_id",
+                    models.AutoField(primary_key=True, serialize=False),
+                ),
                 ("name", models.CharField(max_length=100, unique=True)),
                 ("url", models.URLField(max_length=255)),
             ],
@@ -27,7 +30,10 @@ class Migration(migrations.Migration):
                 ("page_url", models.URLField()),
                 ("salary_min", models.FloatField(default=None, null=True)),
                 ("salary_max", models.FloatField(default=None, null=True)),
-                ("currency", models.CharField(default=None, max_length=4, null=True)),
+                (
+                    "currency",
+                    models.CharField(default=None, max_length=4, null=True),
+                ),
                 ("job_title", models.CharField(max_length=255)),
                 ("company", models.CharField(max_length=255)),
                 ("post_date", models.DateTimeField()),
@@ -62,7 +68,8 @@ class Migration(migrations.Migration):
                 (
                     "vendor_id",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="worker.vendors"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="worker.vendors",
                     ),
                 ),
             ],
