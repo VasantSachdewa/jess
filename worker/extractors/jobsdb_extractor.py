@@ -18,7 +18,7 @@ class JobsdbDetailExtractor(JobExtractorInterface):
         ''' data is list of unprocessed jobs'''
         self.raw_data = data
         
-    def get_cleaned_data(self) -> List[ExtractedDataType]:
+    def get_cleaned_data(self) -> ExtractedDataType:
         logger.debug("Extracting data for seller {}".format(self.ID))
         job_detail = self.raw_data['data']['jobDetail']
         extracted_data = {
