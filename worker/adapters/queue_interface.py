@@ -1,6 +1,4 @@
-
-class QueueInterface():
-
+class QueueInterface:
     def drop_message(self, *args, **kwargs):
         raise NotImplemented
 

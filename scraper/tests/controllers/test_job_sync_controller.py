@@ -4,9 +4,8 @@ from scraper.controllers.job_sync_controller import JobSyncController
 
 
 class TestJobSyncController(unittest.TestCase):
-
-    @patch('scraper.controllers.job_sync_controller.QueueFactory')
-    @patch('scraper.controllers.job_sync_controller.ScraperFactory')
+    @patch("scraper.controllers.job_sync_controller.QueueFactory")
+    @patch("scraper.controllers.job_sync_controller.ScraperFactory")
     def test_sync_vendor_valid(self, scraper_factory, queue_factory):
         adapter_obj = self._mock_scraper_factory(scraper_factory)
         queue_obj = self._mock_queue_factory(queue_factory)
@@ -27,4 +26,3 @@ class TestJobSyncController(unittest.TestCase):
         queue_factory.get_message_queue = MagicMock(return_value=queue_obj)
 
         return queue_obj
-

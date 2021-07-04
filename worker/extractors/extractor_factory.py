@@ -1,12 +1,13 @@
-from worker.extractors.extractor_interface import JobExtractorInterface, ExtractedDataType
+from worker.extractors.extractor_interface import (
+    JobExtractorInterface,
+    ExtractedDataType,
+)
 from worker.extractors.jobsdb_extractor import JobsdbDetailExtractor
 from worker.exceptions import InvalidExtractorId
 from typing import Dict
 
 
-EXTRACTORS = [
-    JobsdbDetailExtractor
-]
+EXTRACTORS = [JobsdbDetailExtractor]
 
 
 class JobsExtractorFactory:

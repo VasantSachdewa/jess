@@ -1,11 +1,9 @@
 from scraper.adapters.job_scraper_interface import JobScraperInterface
 from scraper.adapters.jobsdb_scraper import JobsdbScraper
-from scraper.exceptions import InvalidScaperId 
+from scraper.exceptions import InvalidScaperId
 from typing import Dict
 
-SCRAPER_ADAPTERS = [
-    JobsdbScraper
-]
+SCRAPER_ADAPTERS = [JobsdbScraper]
 
 
 class ScraperFactory:
@@ -29,6 +27,3 @@ class ScraperFactory:
             raise InvalidScaperId(_id)
 
         return adapter
-
-
-

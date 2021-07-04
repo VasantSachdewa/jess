@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('worker', '0005_alter_jobsdetail_job_id'),
+        ("worker", "0005_alter_jobsdetail_job_id"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobsdetail',
-            name='job_id',
+            model_name="jobsdetail",
+            name="job_id",
             field=models.CharField(max_length=255),
         ),
         migrations.AlterUniqueTogether(
-            name='jobsdetail',
-            unique_together={('vendor_id', 'job_id')},
+            name="jobsdetail",
+            unique_together={("vendor_id", "job_id")},
         ),
         migrations.AlterUniqueTogether(
-            name='jobsraw',
-            unique_together={('vendor_id', 'job_id')},
+            name="jobsraw",
+            unique_together={("vendor_id", "job_id")},
         ),
     ]

@@ -5,7 +5,6 @@ from worker.models import JobsDetail, Vendors
 from unittest import mock
 
 
-
 EXPECTED_LIST_RESPONSE = {
     "count": 1,
     "next": None,
@@ -33,23 +32,18 @@ EXPECTED_LIST_RESPONSE = {
 
 
 class TestJobDetailVewSet(TestCase):
-
     @classmethod
     def setUpTestData(cls) -> None:
-        vendor_obj = Vendors(
-            name='random', url='https://www.random.com')
+        vendor_obj = Vendors(name="random", url="https://www.random.com")
         vendor_obj.save()
-        job_detail_obj = JobsDetail(
-            vendor_id=vendor_obj, **JOB_DETAIL_DATA)
+        job_detail_obj = JobsDetail(vendor_id=vendor_obj, **JOB_DETAIL_DATA)
         job_detail_obj.save()
         cls.job_detail_obj = job_detail_obj
 
     def test_list_jobs_valid(self) -> None:
         expected_response = EXPECTED_LIST_RESPONSE
-        response = self.client.get('/jobs/', header={'content-type': 'application/json'})
+        response = self.client.get(
+            "/jobs/", header={"content-type": "application/json"}
+        )
         self.assertEqual(response.json(), expected_response)
         self.assertEqual(response.status_code, 200)
-
-
-
-

@@ -7,18 +7,28 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('worker', '0002_auto_20210613_1740'),
+        ("worker", "0002_auto_20210613_1740"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobsraw',
-            name='id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='worker.jobsdetail', unique=True),
+            model_name="jobsraw",
+            name="id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                primary_key=True,
+                serialize=False,
+                to="worker.jobsdetail",
+                unique=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='jobsraw',
-            name='vendor_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='worker.vendors', unique=True),
+            model_name="jobsraw",
+            name="vendor_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="worker.vendors",
+                unique=True,
+            ),
         ),
     ]

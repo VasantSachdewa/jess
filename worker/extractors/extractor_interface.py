@@ -16,10 +16,9 @@ class ExtractedDataType(TypedDict):
     industry: str
 
 
-class JobExtractorInterface():
-    
-    def __init__(self, data:list):
+class JobExtractorInterface:
+    def __init__(self, data: list):
         raise NotImplemented
-    
+
     def get_cleaned_data(self) -> ExtractedDataType:
         raise NotImplemented

@@ -6,6 +6,5 @@ from worker.validators import JobsDetailSerializer
 
 # Create your views here.
 class JobDetailViewSet(viewsets.ModelViewSet):
-	queryset = JobsDetail.objects.all()
-	serializer_class = JobsDetailSerializer
-
+    queryset = JobsDetail.objects.all()
+    serializer_class = JobsDetailSerializer
