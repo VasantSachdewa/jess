@@ -32,9 +32,9 @@ class JobsDetail(models.Model):
     job_title = models.CharField(max_length=255, blank=False, null=False)
     company = models.CharField(max_length=255, blank=False)
     post_date = models.DateTimeField(blank=False, null=False)
-    job_description = models.TextField(blank=False)
-    job_requirements = models.TextField(blank=False)
-    benefits = models.TextField(blank=False)
+    job_description = models.JSONField(blank=False)
+    job_requirements = models.JSONField(blank=False)
+    benefits = models.JSONField(blank=False)
     industry = models.CharField(max_length=255, blank=False)
 
 
