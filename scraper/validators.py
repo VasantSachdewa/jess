@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from scraper.models import Websites
 
 
 class WebsiteConfigPostValidator(serializers.Serializer):

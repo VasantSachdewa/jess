@@ -30,7 +30,7 @@ class JobsExtractorFactory:
         try:
             extractor_klss = JobsExtractorFactory.__instance.extractor_map[_id]
             obj = extractor_klss(data)
-        except KeyError as e:
+        except KeyError:
             raise InvalidExtractorId(_id)
 
         return obj

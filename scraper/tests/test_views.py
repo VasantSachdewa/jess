@@ -1,6 +1,5 @@
-import unittest
 from scraper.exceptions import InvalidScaperId
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 from django.test import TestCase
 from scraper.models import Websites
 import json

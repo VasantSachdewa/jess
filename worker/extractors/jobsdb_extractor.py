@@ -1,5 +1,5 @@
 import datetime
-from typing import TypedDict, Dict, Union, List
+from typing import Dict, Union, List
 
 from jess.libs.logs import Logs
 from worker.extractors.extractor_interface import (
@@ -49,14 +49,14 @@ class JobsdbDetailExtractor(JobExtractorInterface):
     def _extract_min_salary(self, job_detail: Dict) -> Union[float, None]:
         try:
             return float(job_detail["header"]["salary"]["min"])
-        except TypeError as e:
+        except TypeError:
             logger.info("Failed extracting salary_min")
             return None
 
     def _extract_max_salary(self, job_detail: Dict) -> Union[float, None]:
         try:
             return float(job_detail["header"]["salary"]["max"])
-        except TypeError as e:
+        except TypeError:
             logger.info("Failed extracting salary_max")
 
     def _extract_title(self, job_detail: Dict) -> str:

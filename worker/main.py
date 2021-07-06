@@ -1,4 +1,4 @@
-import sys, os, django
+import django
 
 # sys.path.append("/Users/vasant/Desktop/development/job_scanner/jess") #here store is root folder(means parent).
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jess.settings")

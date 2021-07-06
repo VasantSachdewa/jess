@@ -18,7 +18,7 @@ class ExtractedDataType(TypedDict):
 
 class JobExtractorInterface:
     def __init__(self, data: list):
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_cleaned_data(self) -> ExtractedDataType:
-        raise NotImplemented
+        raise NotImplementedError

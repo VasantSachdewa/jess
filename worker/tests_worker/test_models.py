@@ -1,10 +1,8 @@
-import json
 import datetime
 from unittest import skip
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from django.test.client import ClientHandler
 from worker.models import JobsRaw, JobsDetail, Vendors
 from worker.tests_worker.test_config import JOB_DETAIL_DATA
 

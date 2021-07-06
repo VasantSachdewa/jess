@@ -3,7 +3,6 @@ from worker.models import JobsRaw, Vendors, JobsDetail
 from worker.extractors.extractor_interface import ExtractedDataType
 from jess.libs.logs import Logs
 from typing import Dict
-import json
 
 logger = Logs.get_logger("Worker")
 
@@ -14,7 +13,7 @@ class PostgresAdapter(DatastoreInterface):
     ) -> JobsDetail:
         vendor_obj = Vendors.objects.get(vendor_id=vendor_id)
         job_details_obj = self.store_extracted_data(vendor_obj, extracted_data)
-        raw_obj = self.store_raw_data(job_details_obj, raw_data)
+        self.store_raw_data(job_details_obj, raw_data)
 
     def store_extracted_data(
         self, vendor_obj: Vendors, extracted_data: ExtractedDataType

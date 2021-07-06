@@ -1,4 +1,3 @@
-import datetime
 
 JOB_DETAIL_DATA = {
     "job_id": "random_id",

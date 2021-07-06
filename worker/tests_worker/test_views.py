@@ -1,7 +1,6 @@
-from typing import Any
 from worker.tests_worker.test_config import JOB_DETAIL_DATA
-from django.test import TestCase, TransactionTestCase
 from worker.models import JobsDetail, Vendors
+from django.test import TestCase
 from unittest import mock
 
 

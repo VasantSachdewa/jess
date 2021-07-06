@@ -96,7 +96,7 @@ class JobsdbScraper(JobScraperInterface):
                         self.ENDPOINT, resp.status_code, resp.content
                     )
                 data = resp.json()
-            except JobsdbDetailRequestError as e:
+            except JobsdbDetailRequestError:
                 logger.error("Failed to request job_id {}".format(job_id))
                 continue
             except Exception as e:
@@ -127,7 +127,7 @@ class JobsdbScraper(JobScraperInterface):
                         self.ENDPOINT, resp.status_code, resp.content
                     )
                 data = resp.json()
-            except JobsdbListingRequestError as e:
+            except JobsdbListingRequestError:
                 logger.error(
                     "Failed request for page_number {}".format(page_number)
                 )

@@ -1,6 +1,5 @@
 from django.db import models
 from typing import Dict
-import json
 
 # Create your models here.
 class Websites(models.Model):

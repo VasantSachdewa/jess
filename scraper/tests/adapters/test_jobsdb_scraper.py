@@ -1,6 +1,5 @@
 import unittest
 import json
-from requests import Response
 from unittest.mock import MagicMock, patch
 from scraper.adapters.jobsdb_scraper import JobsdbScraper
 from scraper.tests.adapters.test_configs import (

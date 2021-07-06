@@ -1,4 +1,4 @@
-from typing import Dict, TypedDict, Any, Union
+from typing import Dict, TypedDict, Union
 from scraper.models import Websites
 from jess.libs.logs import Logs
 

@@ -23,7 +23,7 @@ class ScraperFactory:
             ScraperFactory(_id)
         try:
             adapter = ScraperFactory.__instance.adapters_map[_id]
-        except KeyError as e:
+        except KeyError:
             raise InvalidScaperId(_id)
 
         return adapter

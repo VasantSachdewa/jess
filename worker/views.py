@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from worker.models import JobsDetail
 from rest_framework import viewsets
 from worker.validators import JobsDetailSerializer

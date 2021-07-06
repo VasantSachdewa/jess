@@ -1,6 +1,6 @@
 class QueueInterface:
     def drop_message(self, *args, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError
 
     def consume_message(self, *args, **kwargs):
-        raise NotImplemented
+        raise NotImplementedError

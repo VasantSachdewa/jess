@@ -1,5 +1,4 @@
 from scraper.adapters.queue_factory import QueueFactory
-from typing import Dict
 from scraper.adapters.scraper_factory import ScraperFactory
 from jess.libs.logs import Logs
 
