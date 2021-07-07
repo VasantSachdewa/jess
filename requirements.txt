@@ -25,3 +25,4 @@ soupsieve==2.2.1
 sqlparse==0.4.1
 toml==0.10.2
 urllib3==1.26.6
+django-cors-headers==3.7.0
