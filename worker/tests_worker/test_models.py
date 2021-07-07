@@ -8,7 +8,12 @@ from worker.tests_worker.test_config import JOB_DETAIL_DATA
 
 import sys
 
-if sys.argv[1] == "test":
+try:
+    argument = sys.argv[1]
+except IndexError:
+    argument = None
+
+if argument == "test":
     # check if integration test
     from worker.models import JobsRaw, JobsDetail, Vendors
 

@@ -4,7 +4,12 @@ from unittest import mock
 import pytest
 import sys
 
-if sys.argv[1] == "test":
+try:
+    argument = sys.argv[1]
+except IndexError:
+    argument = None
+
+if argument == "test":
     # check if integration test
     from worker.models import JobsDetail, Vendors
 

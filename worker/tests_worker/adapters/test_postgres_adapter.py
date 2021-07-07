@@ -1,7 +1,4 @@
 import unittest
-import django
-
-django.setup()
 from unittest.mock import MagicMock, patch
 from worker.adapters.postgres_adapter import PostgresAdapter
 from worker.models import JobsDetail, Vendors
