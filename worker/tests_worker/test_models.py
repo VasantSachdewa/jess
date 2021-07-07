@@ -1,12 +1,19 @@
 import datetime
+import pytest
 from unittest import skip
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from worker.models import JobsRaw, JobsDetail, Vendors
 from worker.tests_worker.test_config import JOB_DETAIL_DATA
 
+import sys
 
+if sys.argv[1] == "test":
+    # check if integration test
+    from worker.models import JobsRaw, JobsDetail, Vendors
+
+
+@pytest.mark.integration_test
 class TestJobsRaw(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -28,6 +35,7 @@ class TestJobsRaw(TestCase):
         self.assertEqual(record.job_id, "random")
 
 
+@pytest.mark.integration_test
 class TestVendors(TestCase):
     def test_create_vendor_valid_record(self):
         record = Vendors(name="vasant", url="https://www.vasant.com")
@@ -42,6 +50,7 @@ class TestVendors(TestCase):
         self.assertRaises(ValidationError, record.full_clean)
 
 
+@pytest.mark.integration_test
 class TestJobsDetail(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:

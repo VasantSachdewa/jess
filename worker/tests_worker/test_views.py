@@ -1,8 +1,12 @@
 from worker.tests_worker.test_config import JOB_DETAIL_DATA
-from worker.models import JobsDetail, Vendors
 from django.test import TestCase
 from unittest import mock
+import pytest
+import sys
 
+if sys.argv[1] == "test":
+    # check if integration test
+    from worker.models import JobsDetail, Vendors
 
 EXPECTED_LIST_RESPONSE = {
     "count": 1,
@@ -10,13 +14,9 @@ EXPECTED_LIST_RESPONSE = {
     "previous": None,
     "results": [
         {
-            "url": "http://testserver/jobs/2/",
-            "id": 2,
-            "vendor_id": {
-                "vendor_id": 5,
-                "name": "random",
-                "url": "https://www.random.com",
-            },
+            "url": mock.ANY,
+            "id": mock.ANY,
+            "vendor_id": mock.ANY,
             "job_id": "random_id",
             "page_url": "https://www.random.com",
             "salary_min": None,
@@ -45,7 +45,7 @@ EXPECTED_LIST_RESPONSE = {
 }
 
 
-
+@pytest.mark.integration_test
 class TestJobDetailVewSet(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:

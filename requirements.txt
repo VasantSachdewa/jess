@@ -26,3 +26,4 @@ sqlparse==0.4.1
 toml==0.10.2
 urllib3==1.26.6
 django-cors-headers==3.7.0
+pytest==6.2.4

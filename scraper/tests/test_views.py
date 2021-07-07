@@ -1,10 +1,17 @@
 from scraper.exceptions import InvalidScaperId
 from unittest.mock import patch
 from django.test import TestCase
-from scraper.models import Websites
+import pytest
 import json
 
+import sys
 
+if sys.argv[1] == "test":
+    # check if integration test
+    from scraper.models import Websites
+
+
+@pytest.mark.integration_test
 class TestWebsiteConfigView(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -151,6 +158,7 @@ class TestWebsiteConfigView(TestCase):
         self.assertEqual(response.json(), expected_response)
 
 
+@pytest.mark.integration_test
 class TestSyncJob(TestCase):
     @patch("scraper.adapters.kafka_queue.KafkaProducer")
     def test_get_job_sync_valid_id(self, mock_kafka_producer):
