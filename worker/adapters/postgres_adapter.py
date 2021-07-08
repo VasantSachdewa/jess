@@ -21,7 +21,21 @@ class PostgresAdapter(DatastoreInterface):
         logger.debug("Storing {} to Postgres database".format(extracted_data))
         extracted_data["vendor_id"] = vendor_obj
         job_detail_obj, _ = JobsDetail.objects.update_or_create(
-            **extracted_data
+            vendor_id=extracted_data["vendor_id"],
+            job_id=extracted_data["job_id"],
+            defaults={
+                "page_url": extracted_data["page_url"],
+                "salary_min": extracted_data["salary_min"],
+                "salary_max": extracted_data["salary_max"],
+                "currency": extracted_data["currency"],
+                "job_title": extracted_data["job_title"],
+                "company": extracted_data["company"],
+                "post_date": extracted_data["post_date"],
+                "job_description": extracted_data["job_description"],
+                "job_requirements": extracted_data["job_requirements"],
+                "benefits": extracted_data["benefits"],
+                "industry": extracted_data["industry"]
+            }
         )
         logger.debug(
             "Successfully stored data with id {}".format(job_detail_obj.job_id)
