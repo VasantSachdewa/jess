@@ -4,6 +4,8 @@ django.setup()
 from scraper.controllers.job_sync_controller import JobSyncController
 from scraper.models import Websites
 from jess.libs.logs import Logs
+import schedule
+import time
 
 logger = Logs.get_logger("Scraper")
 
@@ -24,6 +26,9 @@ def sync_vendors():
 
 
 if __name__ == '__main__':
-	sync_vendors()
+	schedule.every(1).hours.do(sync_vendors)
+	while True:
+		schedule.run_pending()
+		time.sleep(1)
 
 
