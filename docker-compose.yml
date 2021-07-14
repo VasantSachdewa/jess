@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CREATE_TOPICS: "new_jobs:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on: 
+      - zookeeper
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: job_scanner
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: bangbang
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    volumes:
+      - .:/app
+    command: tail -f /dev/null
+    depends_on: 
+      - kafka
+      - db
