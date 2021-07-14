@@ -67,7 +67,7 @@ class JobsdbScraper(JobScraperInterface):
     HEADER = HEADER
     _ID = 1
 
-    def get_posts(self, post_count: int = 100) -> List:
+    def get_posts(self, post_count: int = 10) -> List:
         job_listings = self.get_job_detail_list(post_count)
 
         return job_listings
