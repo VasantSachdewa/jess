@@ -26,10 +26,9 @@ def sync_vendors():
 
 
 if __name__ == '__main__':
-	sync_vendors()
-	# schedule.every(1).hours.do(sync_vendors)
-	# while True:
-	# 	schedule.run_pending()
-	# 	time.sleep(1)
+	schedule.every(1).hours.do(sync_vendors)
+	while True:
+		schedule.run_pending()
+		time.sleep(1)
 
 
