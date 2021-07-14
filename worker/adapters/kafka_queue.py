@@ -21,6 +21,7 @@ class KafkaAdapter(QueueInterface):
             value_deserializer=lambda m: json.loads(m.decode("ascii")),
             auto_offset_reset="earliest",
             enable_auto_commit=True,
+            api_version=(0, 10)
         )
 
     def consume_message(self):

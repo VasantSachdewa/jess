@@ -1,4 +1,5 @@
 import json
+from threading import TIMEOUT_MAX
 
 from jess.libs.logs import Logs
 from jess.settings import KAFKA_CONFIG
@@ -18,7 +19,7 @@ class KafkaAdapter(QueueInterface):
         return KafkaProducer(
             value_serializer=lambda m: json.dumps(m).encode("ascii"),
             bootstrap_servers=self.KAFKA_CONFIG["KAFKA_HOST"],
-            api_version=(0, 10),
+            api_version=(0, 10)
         )
 
     def drop_message(self, messages: Any):
