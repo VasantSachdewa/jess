@@ -24,13 +24,22 @@ services:
       POSTGRES_DB: job_scanner
       POSTGRES_USER: root
       POSTGRES_PASSWORD: bangbang
+  scraper:
+    build:
+      context: .
+      dockerfile: scraper/Dockerfile
+    volumes:
+      - .:/app
+    depends_on: 
+      - kafka
+      - db
   worker:
     build:
       context: .
       dockerfile: worker/Dockerfile
     volumes:
       - .:/app
-    command: tail -f /dev/null
     depends_on: 
       - kafka
       - db
+      - scraper
