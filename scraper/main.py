@@ -16,19 +16,18 @@ def controllers() -> JobSyncController:
 		yield JobSyncController(website_obj.id)
 
 
-def sync_vendors():
+def sync_vendors(event=None, context=None):
 	'''
 		Get list of vendors	and start
 		syncing
+		arguments event and context are default
+		for lambda function
 	'''
 	for controller in controllers():
 		controller.sync_vendor()
 
 
 if __name__ == '__main__':
-	schedule.every(1).hours.do(sync_vendors)
-	while True:
-		schedule.run_pending()
-		time.sleep(1)
+	sync_vendors()
 
 

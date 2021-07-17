@@ -1,5 +1,8 @@
-#!/bin/bash
-export PYTHONPATH=.
-export DJANGO_SETTINGS_MODULE=jess.settings
+#!/bin/sh
+MODULE="scraper.main.sync_vendors"
 python manage.py migrate
-python scraper/main.py
+if [ -z "${AWS_LAMBDA_RUNTIME_API}" ]; then
+    exec /usr/bin/aws-lambda-rie /usr/local/bin/python -m awslambdaric $MODULE
+else
+    exec /usr/local/bin/python -m awslambdaric $MODULE
+fi
