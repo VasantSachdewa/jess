@@ -19,3 +19,8 @@ KAFKA_CONFIG = {
     "KAFKA_HOST": [os.getenv("KAFKA_HOST", "kafka:9092")],
     "KAFKA_TOPIC": os.getenv("KAFKA_TOPIC", "new_jobs"),
 }
+
+# AWS SNS Configuration
+SNS_CONFIG = {
+    "SNS_HOST": os.getenv("SNS_HOST", "random") 
+}

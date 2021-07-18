@@ -1,5 +1,4 @@
 import json
-from threading import TIMEOUT_MAX
 
 from jess.libs.logs import Logs
 from jess.settings import KAFKA_CONFIG
