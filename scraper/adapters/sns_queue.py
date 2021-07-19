@@ -34,6 +34,6 @@ class SNSAdapter(QueueInterface):
 		for i in range(0, len(messages['message']), self.CHUNK_SIZE):
 			yield {
 				"vendor_id": messages["vendor_id"],
-				"message": messages[i : i + self.CHUNK_SIZE]
+				"message": messages['message'][i : i + self.CHUNK_SIZE]
 			}
 
