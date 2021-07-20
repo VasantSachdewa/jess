@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from worker.controllers.sync_jobs_controller import SyncJobsController
+from worker.controllers.sync_jobs_controller import SyncJobsController, SyncJobsControllerSNS
+from worker.tests_worker.test_config import LAMBDA_PAYLOAD
 
 
 class MockKafkaMessage:
@@ -32,5 +33,25 @@ class TestSyncJobsController(unittest.TestCase):
 
         controller = SyncJobsController()
         controller.store_from_queue_to_datastore()
+        self.assertTrue(extractor_obj.get_cleaned_data.called)
+        self.assertTrue(db_adapter_obj.store_jobs_data.called)
+
+
+class TestSyncJobsControllerSNS(unittest.TestCase):
+
+    @patch("worker.controllers.sync_jobs_controller.JobsExtractorFactory")
+    @patch("worker.controllers.sync_jobs_controller.DatastoreFactory")
+    def test_store_data_to_datastore_valid(self, datastore_factory, job_extractor_factory):
+        extractor_obj = MagicMock()        
+        job_extractor_factory.get_extractor = MagicMock(
+            return_value=extractor_obj
+        )
+        db_adapter_obj = MagicMock()
+        datastore_factory.get_datastore_adapter = MagicMock(
+            return_value=db_adapter_obj
+        )
+
+        controller = SyncJobsControllerSNS()
+        controller.store_data_to_datastore(data=LAMBDA_PAYLOAD)
         self.assertTrue(extractor_obj.get_cleaned_data.called)
         self.assertTrue(db_adapter_obj.store_jobs_data.called)
