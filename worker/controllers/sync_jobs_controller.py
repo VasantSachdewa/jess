@@ -3,6 +3,8 @@ from jess.libs.logs import Logs
 from worker.extractors.extractor_factory import JobsExtractorFactory
 from worker.adapters.datastore_factory import DatastoreFactory
 
+import json
+
 logger = Logs.get_logger("Worker")
 
 
@@ -29,6 +31,38 @@ class SyncJobsController:
                 )
             )
             # loop through message job list inside each message
+            for job in raw_job_list:
+                detail_extractor = JobsExtractorFactory.get_extractor(
+                    vendor_id, job
+                )
+                extracted_job_detail = detail_extractor.get_cleaned_data()
+                self.db_adapter.store_jobs_data(
+                    vendor_id, extracted_job_detail, job
+                )
+
+
+class SyncJobsControllerSNS: 
+    '''
+        The responsibility of the module is to extract
+        and transform the data recreived from SNS into 
+        Datastore 
+    '''
+
+    def __init__(self):
+        self.db_adapter = DatastoreFactory.get_datastore_adapter()
+
+    def store_data_to_datastore(self, data: dict):
+        for record in data["Records"]:
+            logger.debug("Transforming data for {}".format(record))
+            parsed_data = json.loads(record['Sns']['Message'])
+            vendor_id = parsed_data["vendor_id"]
+            raw_job_list = parsed_data["message"]
+            logger.debug(
+                "Extracting data for vendor_id {} message size {}".format(
+                    vendor_id, len(raw_job_list)
+                )
+            )
+
             for job in raw_job_list:
                 detail_extractor = JobsExtractorFactory.get_extractor(
                     vendor_id, job

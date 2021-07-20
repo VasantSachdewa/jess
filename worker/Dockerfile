@@ -1,5 +1,11 @@
-FROM python:3.9
+FROM public.ecr.aws/lambda/python:3.8
+
 WORKDIR /app
-COPY . /app/
-RUN pip install -r requirements.txt
-CMD ["sh", "scripts/run_worker.sh"]
+
+COPY requirements.txt .
+RUN python -m pip install --upgrade pip
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+CMD ["/app/worker/runner.worker"]
