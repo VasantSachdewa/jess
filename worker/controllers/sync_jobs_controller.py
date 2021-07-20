@@ -1,7 +1,7 @@
 from worker.adapters.queue_factory import QueueFactory
 from jess.libs.logs import Logs
 from worker.extractors.extractor_factory import JobsExtractorFactory
-from worker.adapters.postgres_adapter import PostgresAdapter
+from worker.adapters.datastore_factory import DatastoreFactory
 
 logger = Logs.get_logger("Worker")
 
@@ -13,7 +13,7 @@ class SyncJobsController:
     """
 
     def __init__(self):
-        self.db_adapter = PostgresAdapter()
+        self.db_adapter = DatastoreFactory.get_datastore_adapter()
 
     # get data from queue
     def store_from_queue_to_datastore(self):
