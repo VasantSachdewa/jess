@@ -27,19 +27,35 @@ services:
   scraper:
     build:
       context: .
-      dockerfile: scraper/Dockerfile
+      dockerfile: scraper/Dockerfile.dev
+    command: bash -c "python manage.py migrate && python scraper/main.py"
     volumes:
       - .:/app
+    environment: 
+      PYTHONPATH: .
+      DJANGO_SETTINGS_MODULE: jess.settings
     depends_on: 
       - kafka
       - db
   worker:
     build:
       context: .
-      dockerfile: worker/Dockerfile
+      dockerfile: worker/Dockerfile.dev
     volumes:
       - .:/app
     depends_on: 
       - kafka
+      - db
+      - scraper
+  api:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile.dev
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on: 
       - db
       - scraper
