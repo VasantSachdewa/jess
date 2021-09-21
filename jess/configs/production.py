@@ -25,3 +25,6 @@ KAFKA_CONFIG = {
 SNS_CONFIG = {
     "SNS_HOST": os.getenv("SNS_HOST", "random") 
 }
+
+#Cloudwatch Configuration
+CLOUDWATCH_NAMESPACE = os.getenv("CLOUDWATCH_NAMESPACE", 'production')

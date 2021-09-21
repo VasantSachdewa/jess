@@ -19,3 +19,6 @@ KAFKA_CONFIG = {
     "KAFKA_HOST": [os.getenv("KAFKA_HOST", "kafka:9092")],
     "KAFKA_TOPIC": os.getenv("KAFKA_TOPIC", "new_jobs"),
 }
+
+#Cloudwatch Configuration
+CLOUDWATCH_NAMESPACE = os.getenv("CLOUDWATCH_NAMESPACE", "development")
