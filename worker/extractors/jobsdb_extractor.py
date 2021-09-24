@@ -2,6 +2,7 @@ import datetime
 from typing import Dict, Union, List
 
 from jess.libs.logs import Logs
+from jess.libs.metrics_tracker import STATSD_CLIENT
 from worker.extractors.extractor_interface import (
     ExtractedDataType,
     JobExtractorInterface,
@@ -20,6 +21,7 @@ class JobsdbDetailExtractor(JobExtractorInterface):
         """data is list of unprocessed jobs"""
         self.raw_data = data
 
+    @STATSD_CLIENT.timer('worker.JobsdbDetailExtractor.get_cleaned_data')
     def get_cleaned_data(self) -> ExtractedDataType:
         logger.debug("Extracting data for seller {}".format(self.ID))
         job_detail = self.raw_data["data"]["jobDetail"]

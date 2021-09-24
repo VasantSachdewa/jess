@@ -2,6 +2,7 @@ from worker.adapters.queue_factory import QueueFactory
 from jess.libs.logs import Logs
 from worker.extractors.extractor_factory import JobsExtractorFactory
 from worker.adapters.datastore_factory import DatastoreFactory
+from jess.libs.metrics_tracker import STATSD_CLIENT
 
 import json
 
@@ -51,6 +52,7 @@ class SyncJobsControllerSNS:
     def __init__(self):
         self.db_adapter = DatastoreFactory.get_datastore_adapter()
 
+    @STATSD_CLIENT.timer('worker.SyncJobsControllerSNS.store_data_to_datastore')
     def store_data_to_datastore(self, data: dict):
         for record in data["Records"]:
             logger.debug("Transforming data for {}".format(record))

@@ -3,6 +3,7 @@ from typing import List
 
 import requests
 from jess.libs.logs import Logs
+from jess.libs.metrics_tracker import STATSD_CLIENT
 from scraper.adapters.job_scraper_interface import JobScraperInterface
 from scraper.exceptions.request_exceptions import (
     JobsdbDetailRequestError,
@@ -67,11 +68,13 @@ class JobsdbScraper(JobScraperInterface):
     HEADER = HEADER
     _ID = 1
 
+    @STATSD_CLIENT.timer('scraper.JobsdbScraper.get_posts')
     def get_posts(self, post_count: int = 10) -> List:
         job_listings = self.get_job_detail_list(post_count)
 
         return job_listings
 
+    @STATSD_CLIENT.timer('scraper.JobsdbScraper.get_job_detail_list')
     def get_job_detail_list(self, post_count: int) -> List:
         """
         the method is responsible for returning list
@@ -106,6 +109,7 @@ class JobsdbScraper(JobScraperInterface):
 
         return job_details_list
 
+    @STATSD_CLIENT.timer('scraper.JobsdbScraper.get_job_listings')
     def get_job_listings(self, post_count: int) -> List:
         """
         the method is responsbile for returning listing

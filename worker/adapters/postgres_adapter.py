@@ -2,12 +2,14 @@ from worker.adapters.datastore_interface import DatastoreInterface
 from worker.models import JobsRaw, Vendors, JobsDetail
 from worker.extractors.extractor_interface import ExtractedDataType
 from jess.libs.logs import Logs
+from jess.libs.metrics_tracker import STATSD_CLIENT
 from typing import Dict
 
 logger = Logs.get_logger("Worker")
 
 
 class PostgresAdapter(DatastoreInterface):
+    @STATSD_CLIENT.timer('worker.PostgresAdapter.store_jobs_data')
     def store_jobs_data(
         self, vendor_id: int, extracted_data: ExtractedDataType, raw_data: Dict
     ) -> JobsDetail:
@@ -15,6 +17,7 @@ class PostgresAdapter(DatastoreInterface):
         job_details_obj = self.store_extracted_data(vendor_obj, extracted_data)
         self.store_raw_data(job_details_obj, raw_data)
 
+    @STATSD_CLIENT.timer('worker.PostgresAdapter.store_extracted_data')
     def store_extracted_data(
         self, vendor_obj: Vendors, extracted_data: ExtractedDataType
     ) -> JobsDetail:

@@ -4,6 +4,7 @@ django.setup()
 from scraper.controllers.job_sync_controller import JobSyncController
 from scraper.models import Websites
 from jess.libs.logs import Logs
+from jess.libs.metrics_tracker import STATSD_CLIENT
 import schedule
 import time
 
@@ -16,6 +17,7 @@ def controllers() -> JobSyncController:
 		yield JobSyncController(website_obj.id)
 
 
+@STATSD_CLIENT.timer('scraper.sync_vendors')
 def sync_vendors(event=None, context=None):
 	'''
 		Get list of vendors	and start

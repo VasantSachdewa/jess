@@ -1,5 +1,6 @@
 import json
 
+from jess.libs.metrics_tracker import STATSD_CLIENT
 from jess.libs.logs import Logs
 from jess.settings import SNS_CONFIG
 import boto3
@@ -14,6 +15,7 @@ class SNSAdapter(QueueInterface):
 	SNS_CONFIG = SNS_CONFIG
 	CHUNK_SIZE = 5
 
+	@STATSD_CLIENT.timer('scraper.SNSAdapter.get_producer')
 	def get_producer(self):
 		sns_resource = boto3.resource('sns')
 		logger.debug("Setting up SNS connection queue id {}".format(
@@ -22,6 +24,7 @@ class SNSAdapter(QueueInterface):
 
 		return topic
 
+	@STATSD_CLIENT.timer('scraper.SNSAdapter.drop_message')
 	def drop_message(self, messages: Dict):
 		producer = self.get_producer()
 		for message in self._get_chunk(messages):
