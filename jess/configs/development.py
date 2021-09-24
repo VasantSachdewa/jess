@@ -22,3 +22,7 @@ KAFKA_CONFIG = {
 
 #Cloudwatch Configuration
 CLOUDWATCH_NAMESPACE = os.getenv("CLOUDWATCH_NAMESPACE", "development")
+
+#Statsd Configuration
+STATSD_HOST = os.getenv('STATSD_HOST', 'localhost')
+STATSD_PORT = int(os.getenv('STATSD_PORT', 8125))
