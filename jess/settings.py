@@ -55,6 +55,7 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
