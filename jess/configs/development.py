@@ -9,7 +9,7 @@ DATABASES = {
         "NAME": os.getenv("DB_NAME", "job_scanner"),
         "USER": os.getenv("DB_USERNAME", "root"),
         "PASSWORD": os.getenv("DB_PASSWORD", "bangbang"),
-        "HOST": os.getenv("DB_HOST", "db"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
