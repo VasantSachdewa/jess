@@ -6,6 +6,7 @@ from user_management import views
 
 urlpatterns = [
 	path("accounts/signup/", views.CustomSignupView.as_view(), name='user_signup'),
-	path("accounts/confirm-email/<key>/", views.CustomConfirmEmailView.as_view(), name='user_confirmation')
+	path("accounts/confirm-email/<key>/", views.CustomConfirmEmailView.as_view(), name='user_confirmation'),
+	path("accounts/password/reset/", views.CustomPasswordResetView.as_view(), name='password_reset')
 ]
 

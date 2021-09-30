@@ -1,5 +1,5 @@
 import json
-from allauth.account.views import SignupView, ConfirmEmailView
+from allauth.account.views import SignupView, ConfirmEmailView, PasswordResetView
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
 from jess import settings as app_settings
@@ -52,5 +52,19 @@ class CustomConfirmEmailView(ConfirmEmailView):
 
         return http_response
 
-        
 
+@method_decorator(csrf_exempt, name='dispatch')
+class CustomPasswordResetView(PasswordResetView):
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            self.form_valid(form)
+            http_response = HttpResponse(json.dumps(
+                {'message': 'Sent an email to reset Password'}), content_type='application/json')
+        else:
+            http_response = HttpResponseBadRequest(json.dumps(
+                {'message': 'Error Reset Password', 'error': form.errors}), content_type='application/json')
+
+        return http_response
