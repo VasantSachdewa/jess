@@ -22,5 +22,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("scraper/", include("scraper.urls")),
     path("", include('user_management.urls')),
-    path("accounts/", include('allauth.urls')),
 ]
