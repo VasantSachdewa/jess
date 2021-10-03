@@ -1,5 +1,10 @@
 import json
-from allauth.account.views import SignupView, ConfirmEmailView, PasswordResetView
+from django.contrib.auth.models import User
+from allauth.account.models import EmailAddress
+from django.db.models import Q
+from allauth.account.views import SignupView, ConfirmEmailView, PasswordResetView, LoginView
+from allauth.account.forms import LoginForm
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
 from jess import settings as app_settings
@@ -68,3 +73,21 @@ class CustomPasswordResetView(PasswordResetView):
                 {'message': 'Error Reset Password', 'error': form.errors}), content_type='application/json')
 
         return http_response
+    
+
+class CustomLoginView(TokenObtainPairView):
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        username = request._data.get('username')
+        user_obj = User.objects.get(Q(username=username) | Q(email=username))
+        is_verified = EmailAddress.objects.get(user=user_obj).verified 
+
+        if not is_verified:
+            response = HttpResponseBadRequest(json.dumps({
+                'message': 'Error Login', 'error': 'Please verify user in email'
+            }), content_type='application/json')
+
+
+        return response
+
