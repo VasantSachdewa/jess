@@ -93,6 +93,7 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
