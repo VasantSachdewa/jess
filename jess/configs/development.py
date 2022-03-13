@@ -9,15 +9,17 @@ DATABASES = {
         "NAME": os.getenv("DB_NAME", "job_scanner"),
         "USER": os.getenv("DB_USERNAME", "root"),
         "PASSWORD": os.getenv("DB_PASSWORD", "bangbang"),
-        "HOST": os.getenv("DB_HOST", "db"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
 # Kafka Configuration
 KAFKA_CONFIG = {
-    "KAFKA_HOST": [os.getenv("KAFKA_HOST", "kafka:9092")],
+    "KAFKA_HOST": os.getenv("KAFKA_HOST", "kafka:9092"),
     "KAFKA_TOPIC": os.getenv("KAFKA_TOPIC", "new_jobs"),
+    "KAFKA_USERNAME": os.getenv("KAFKA_USERNAME", "nttn"),
+    "KAFKA_PASSWORD": os.getenv("KAFKA_PASSWORD", "nttn")
 }
 
 #Cloudwatch Configuration

@@ -5,8 +5,6 @@ from scraper.controllers.job_sync_controller import JobSyncController
 from scraper.models import Websites
 from jess.libs.logs import Logs
 from jess.libs.metrics_tracker import STATSD_CLIENT
-import schedule
-import time
 
 logger = Logs.get_logger("Scraper")
 

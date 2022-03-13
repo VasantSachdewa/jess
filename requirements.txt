@@ -11,7 +11,7 @@ Django==3.2.5
 djangorestframework==3.12.4
 flake8==3.9.2
 idna==2.10
-kafka-python==2.0.2
+confluent-kafka==1.8.2
 mccabe==0.6.1
 mypy-extensions==0.4.3
 pathspec==0.8.1
