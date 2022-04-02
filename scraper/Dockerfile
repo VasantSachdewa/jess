@@ -1,6 +1,6 @@
-FROM public.ecr.aws/lambda/python:3.8
+FROM python:3.9
 WORKDIR /app
 COPY . /app/
-RUN yum -y update && yum -y install gcc
+RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-CMD ["scraper.main.sync_vendors"]
+CMD ["python manage.py runserver"]
